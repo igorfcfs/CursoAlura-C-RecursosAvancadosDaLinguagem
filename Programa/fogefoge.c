@@ -1,89 +1,61 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "fogefoge.h"
+#include "mapa.h"
 
-char** mapa;
-int linhas;
-int colunas;
+MAPA m;
 
-void lemapa() {
-    //matriz de 5 X 10
-    //char mapa[5][10+1];
 
-    /*
-    mapa[0][0] = '|';
-    mapa[4][9] = '@';
-    printf("%c %c\n", mapa[0][0], mapa[4][9]);
-    */
-
-    ///////////////
-    //Variavel
-    /*int* v = malloc(4);
-    *v = 10;
-    printf("inteiro alocado %d\n", *v);
-    free(v);*/
-
-    //Vetor
-    /*int* v = malloc(sizeof(int) * 50);
-    v[0] = 10;
-    v[1] = 20;
-    printf("inteiro alocado %d %d\n", v[0], v[1]);
-    free(v);*/
-
-    //Matriz
-    /*int** v = malloc(sizeof(int*) * 5);
-    for(int i = 0; i < 5; i++){
-        v[i] = malloc(sizeof(int) * 10);
-    }
-    v[0][0] = 10;
-    v[1][1] = 20;
-    printf("inteiro alocado %d %d\n", v[0][0], v[1][1]);
-    for(int i = 0; i < 5; i++){
-        free(v[i]);
-    }
-    free(v);*/
-    ///////////////
-
-	FILE* f;
-	f = fopen("mapa.txt", "r");
-	if(f == 0) {
-		printf("Erro na leitura do mapa");
-		exit(1);
-	}
-
-	fscanf(f, "%d %d", &linhas, &colunas);
-	alocamapa();
-
-	for(int i = 0; i < 5; i++) {
-		fscanf(f, "%s", mapa[i]);
-	}
-
-	fclose(f);
+int acabou() {
+	return 0;
 }
 
-void alocamapa() {
-	mapa = malloc(sizeof(char*) * linhas);
+void move(char direcao) {
+	int x;
+	int y;
 
-	for(int i = 0; i < linhas; i++) {
-		mapa[i] = malloc(sizeof(char) * colunas + 1);
+	for(int i = 0; i < m.linhas; i++) {
+		for(int j = 0; j < m.colunas; j++) {
+			if(m.matriz[i][j] == '@') {
+				x = i;
+				y = j;
+				break;
+			}
+		}
 	}
-}
 
-void liberamapa() {
-	for(int i = 0; i < linhas; i++) {
-		free(mapa[i]);
+	switch(direcao) {
+		case 'a':
+			m.matriz[x][y-1] = '@';
+			break;
+		case 'w':
+			m.matriz[x-1][y] = '@';
+			break;
+		case 's':
+			m.matriz[x+1][y] = '@';
+			break;
+		case 'd':
+			m.matriz[x][y+1] = '@';
+			break;
 	}
 
-	free(mapa);
+	m.matriz[x][y] = '.';
 }
 
 int main() {
 
-	lemapa();
+	lemapa(&m);
 
-	for(int i = 0; i < linhas; i++) {
-		printf("%s\n", mapa[i]);
-	}
+	do {
+		imprimemapa(&m);
 
-	liberamapa();
+		char comando;
+		scanf(" %c", &comando);
+
+		move(comando);
+
+	} while (!acabou());
+
+	liberamapa(&m);
+	return 0;
 }

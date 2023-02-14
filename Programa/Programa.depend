@@ -1,5 +1,11 @@
 # depslib dependency file v1.0
-1676407023 source:d:\projetos\alura\linguagemc\02.recursosavancadosdalinguagem\crecursosavancadosdalinguagem\programa\fogefoge.c
+1676409261 source:d:\projetos\alura\linguagemc\02.recursosavancadosdalinguagem\crecursosavancadosdalinguagem\programa\fogefoge.c
 	<stdio.h>
 	<stdlib.h>
+	"fogefoge.h"
+	"mapa.h"
+
+1676409205 d:\projetos\alura\linguagemc\02.recursosavancadosdalinguagem\crecursosavancadosdalinguagem\programa\fogefoge.h
+
+1676409229 d:\projetos\alura\linguagemc\02.recursosavancadosdalinguagem\crecursosavancadosdalinguagem\programa\mapa.h
 
